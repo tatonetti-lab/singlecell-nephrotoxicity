@@ -1,0 +1,153 @@
+# Default configuration for Nephrotoxicity Analysis Pipeline
+
+# Global settings
+output_base_dir: "pipeline_results"
+cell_type_annotation: "kca" 
+cleanup_intermediate: false
+generate_report: true
+verbose: true
+
+# Data paths for Drug2Cell track
+data_paths:
+  merged_drug_dataset: "input_data/V2_merged_drug_dataset.csv"
+  single_cell_data: "input_data/kidney_data.h5ad"
+
+# Analysis steps to execute
+analysis_steps:
+  drug2cell: true
+  statistical: true
+  ml_drug: true
+  lincs_qc: true
+  differential: true
+  ml_lincs: true
+  simulation: true  # Set to true to run power analysis simulation
+
+# Output subdirectories
+output_subdirs:
+  drug2cell: "drug2cell_results"
+  statistical: "statistical_results" 
+  ml_drug: "drug_score_ml_results"
+  differential: "differential_expression_results"
+  ml_lincs: "expression_ml_results"
+  simulation: "simulation_results"
+
+# Drug2cell analysis configuration
+drug2cell_config:
+  verbose: true
+  use_raw: true
+  nested: true
+
+# Statistical analysis configuration
+statistical_config:
+  alpha: 0.05
+  correction_method: "fdr_bh"
+  verbose: true
+
+# Machine learning configuration
+ml_config:
+  test_size: 0.2
+  cv_folds: 5
+  random_state: 42
+  verbose: true
+  max_features: 1000
+  feature_selection_method: "univariate"  # or "rfe"
+  
+  models:
+    logistic:
+      max_iter: 1000
+      class_weight: "balanced"
+    
+    xgboost:
+      n_estimators: 200
+      learning_rate: 0.01
+      max_depth: 4
+      eval_metric: "logloss"
+    
+    random_forest:
+      n_estimators: 100
+      max_depth: null
+      class_weight: "balanced"
+    
+    svc:
+      C: 1.0
+      kernel: "rbf"
+      gamma: "scale"
+      probability: true
+      class_weight: "balanced"
+
+# LINCS analysis configuration
+lincs_config:
+  kidney_cell_ids: 
+    - "HA1E"
+    - "HA1E.101" 
+    - "HA1E.311"
+    - "HEK293T"
+    - "HEKTE"
+    - "NKDBA"
+  
+  significance_thresholds:
+    fdr: 0.05
+    log2fc: 1.0
+
+# Drug data merging configuration
+merge_drug_data_sources:
+  # Data paths for merging (LINCS track)
+  data_paths:
+    chembl: "input_data/dr2c_var_genes.csv"
+    drugbank: "input_data/refined_drugbank_targets.csv"
+    ryan_ref: "input_data/pryan_reference_set_ades.csv"
+    acs_fda: "input_data/toxic_drugList_ACS.csv"
+    diril: "input_data/DIRIL_508.csv"
+  
+  # LINCS specific data paths
+  lincs_data_paths:
+    merged_drug: "input_data/merged_drug_dataset.csv"
+    lincs_pert: "input_data/GSE70138_Broad_LINCS_pert_info_2017-03-06.txt"
+    lincs_gene: "input_data/GSE70138_Broad_LINCS_gene_info_2017-03-06.txt"
+    lincs_cell: "input_data/GSE70138_Broad_LINCS_cell_info_2017-04-28.txt"
+    lincs_sig: "input_data/GSE70138_Broad_LINCS_sig_info_2017-03-06.txt"
+    gctx: "input_data/GSE70138_Broad_LINCS_Level4_ZSPCINF_mlr12k_n345976x12328_2017-03-06.gctx"
+  
+  output_file: "input_data/V2_merged_drug_dataset.csv"
+  toxicity_columns: 
+    - "Label_Gong"
+    - "Label_Shi" 
+    - "my_findings"
+  target_condition: "acute kidney injury"
+  verbose: true
+
+# Simulation configuration
+simulation_config:
+  default_processes: 4
+  max_processes: 8
+  chunk_size: 10
+  
+  # Simulation parameters
+#  effect_sizes: [0.01, 0.1, 0.2, 0.5, 0.7, 1.0, 2.0, 5.0, 7.0, 10.0]
+  effect_sizes: [0.01, 10.0]
+# response_rates: [0.3, 0.8, 0.95] 
+  response_rates: [0.8]
+  methods: ["single_cell", "pseudo_bulk"]
+# n_iterations: 100  
+  n_iterations: 2
+  n_samples: 3  # Number of samples for pseudo-bulk
+  p_value_threshold: 0.0000025
+  log_fc_threshold: 2.0
+  
+  # Input data file for simulation
+  input_data_file: "input_data/base_sampled_data_1_percent.csv"
+
+# Plotting configuration
+plot_config:
+  dpi: 300
+  bbox_inches: "tight"
+  figure_formats: ["png"]
+  
+  publication_style:
+    svg.fonttype: "none"
+    font.family: "Arial"
+    axes.linewidth: 0.5
+    axes.labelsize: 12
+    xtick.labelsize: 8
+    ytick.labelsize: 10
+    legend.fontsize: 10

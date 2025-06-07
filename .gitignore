@@ -1,0 +1,6 @@
+*__pycache__*
+*.idea/*
+Mature_Full_v3.h5ad
+input_data/*
+pipeline_results/*
+*.DS_Store*
