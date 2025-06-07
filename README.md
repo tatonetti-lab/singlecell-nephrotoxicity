@@ -276,19 +276,3 @@ python run_analysis.py --config config/production_config.yaml
 # Test with minimal data processing
 python run_analysis.py --components statistical --quick-test
 ```
-
-## Citation
-
-If you use this pipeline in your research, please cite:
-
-```
-[Your Citation Information Here]
-```
-
-## License
-
-[Your License Information Here]
-
-## Contact
-
-For questions or support, please contact [Your Contact Information Here].
