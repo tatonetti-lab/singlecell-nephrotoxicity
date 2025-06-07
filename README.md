@@ -24,7 +24,9 @@ pip install -r requirements.txt
 
 ### Required Data Files
 **Download the input data folder from Google Drive and place it in the project root directory.**
-Link: [Input Data Folder](GoogleDriveLink)
+Link: [Input Data Folder](https://cedarssinai-my.sharepoint.com/:f:/g/personal/aditi_kuchi_cshs_org/ElFAz8Hvk79Pm120Vu5wQJ0BI8aCypBitZ2zryeLJVXpZg?email=Aditi.Kuchi%40cshs.org&e=ZhbZYA)
+Please request access or email aditi.kuchi at cshs.org.
+
 The pipeline expects the following files in the `input_data/` directory:
 
 **Core Dataset Files:**
@@ -126,24 +128,6 @@ input_data:
   # ... other data paths
 ```
 
-**Analysis Components:**
-```yaml
-components:
-  differential:
-    enabled: true
-    log_fc_threshold: 1.0
-    fdr_threshold: 0.05
-  
-  statistical:
-    enabled: true
-    correlation_threshold: 0.7
-  
-  ml:
-    enabled: true
-    test_size: 0.2
-    cv_folds: 5
-```
-
 **Output Settings:**
 ```yaml
 output:
@@ -188,65 +172,6 @@ Two complementary ML approaches:
 ### 5. Simulation Analysis
 - **Power Analysis**: Determine optimal sample sizes
 - **Effect Size Analysis**: Simulate various biological effect sizes
-- **Interactive Plots**: HTML visualizations for exploration
-
-## Advanced Usage
-
-### Memory Optimization
-For large datasets, enable memory optimization:
-
-```yaml
-processing:
-  memory_optimization: true
-  chunk_size: 1000
-```
-
-### Parallel Processing
-Enable parallel processing for computationally intensive steps:
-
-```yaml
-processing:
-  n_cores: 4  # Use 4 CPU cores
-  parallel_cv: true  # Parallel cross-validation
-```
-
-### Custom Feature Selection
-Configure feature selection for machine learning:
-
-```yaml
-ml:
-  feature_selection:
-    method: "variance"  # or "univariate", "rfe"
-    n_features: 1000
-```
-
-## Troubleshooting
-
-### Common Issues
-
-**Missing Data Files:**
-- Ensure all required files are in `input_data/` directory
-- Check file names match configuration exactly
-
-**Memory Errors:**
-- Reduce `chunk_size` in configuration
-- Enable `memory_optimization: true`
-- Run individual components separately
-
-**Import Errors:**
-- Install all dependencies: `pip install -r requirements.txt`
-- Check Python version compatibility (≥3.8 recommended)
-
-**Slow Performance:**
-- Enable parallel processing in configuration
-- Reduce dataset size for testing
-- Check available system memory
-
-### Getting Help
-
-1. **Check Logs**: View detailed logs in `pipeline_results/pipeline.log`
-2. **Verbose Output**: Run with `--verbose` flag for detailed progress
-3. **Component Testing**: Test individual components before full pipeline
 
 ## Example Workflows
 
@@ -263,16 +188,4 @@ python run_analysis.py --components ml
 
 # 4. Validate with simulation
 python run_analysis.py --components simulation
-```
-
-### Production Workflow
-```bash
-# Run complete pipeline with optimized settings
-python run_analysis.py --config config/production_config.yaml
-```
-
-### Quick Testing
-```bash
-# Test with minimal data processing
-python run_analysis.py --components statistical --quick-test
 ```
