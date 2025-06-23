@@ -1,6 +1,8 @@
 # Nephrotoxicity Analysis Pipeline
 
 A comprehensive pipeline for analyzing drug-induced nephrotoxicity using single-cell RNA sequencing data and machine learning approaches.
+Zenodo link to data: https://doi.org/10.5281/zenodo.15724290
+Pre-print: https://doi.org/10.1101/2025.06.17.660070
 
 ## Overview
 
@@ -23,9 +25,8 @@ pip install -r requirements.txt
 ```
 
 ### Required Data Files
-**Download the input data folder from Google Drive and place it in the project root directory.**
-Link: [Input Data Folder](https://cedarssinai-my.sharepoint.com/:f:/g/personal/aditi_kuchi_cshs_org/ElFAz8Hvk79Pm120Vu5wQJ0BI8aCypBitZ2zryeLJVXpZg?email=Aditi.Kuchi%40cshs.org&e=ZhbZYA)
-Please request access or email aditi.kuchi at cshs.org.
+**Download the input data folder from Zenodo and place it in the project root directory.**
+Link: https://doi.org/10.5281/zenodo.15724290
 
 The pipeline expects the following files in the `input_data/` directory:
 
